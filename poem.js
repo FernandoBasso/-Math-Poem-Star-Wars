@@ -1,5 +1,4 @@
 (function () {
-
   /**
    * Shorter name for ‘querySelector()’.
    *
@@ -28,6 +27,7 @@
 
   const poemWrp = document.querySelector('.poem-wrp');
   const crawl = qs('.crawl', poemWrp);
+  const audio = qs('audio');
 
   const btnPlayPause = qs('.btn-play-pause', poemWrp);
   const btnRestart = qs('.btn-restart', poemWrp);
@@ -38,14 +38,15 @@
     if (isRunning) {
       crawl.classList.remove('running');
       crawl.classList.add('paused');
+      audio.pause();
       btnPlayPause.textContent = 'Play';
     } else {
       crawl.classList.remove('paused');
       crawl.classList.add('running');
+      audio.play();
       btnPlayPause.textContent = 'Pause';
     }
   }, false);
-
 
   btnRestart.addEventListener('click', function onRestartClicked () {
     crawl.classList.remove('crawl', 'paused', 'running');
@@ -60,6 +61,8 @@
     //
     setTimeout(function onTimeout () {
       crawl.classList.add('crawl', 'running');
+      audio.currentTime = 0;
+      audio.play();
     }, 15);
   }, false);
 
